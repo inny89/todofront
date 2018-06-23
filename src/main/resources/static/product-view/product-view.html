@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <p>
+    <form name="product-form" ng-submit="controller.update()">
+        <div class = "form-group">
+            <label for="product-name">Name</label>
+            <input class="form-control" id="product-name" ng-model="controller.product.name"/>
+        </div>
+        <div class = "form-group">
+            <label for="product-price">Price</label>
+            <input class="form-control" id="product-price" type="number" step="0.01" ng-model="controller.product.price"/>
+        </div>
+        <button class="btn btn-primary" type="submit">Update</button>
+    </form>
+    </p>
+
+</body>
+</html>

@@ -13,6 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,17 +30,23 @@ import lombok.Setter;
 @Table(name = "receipts")
 public class Receipt extends BaseEntity {
 
-  @Column(nullable = false)
-  private String buyer;
+    @Pattern.List({
+            @Pattern(regexp = "(?=.*[0-9]).+", message = "must contain at least 1 number"),
+            @Pattern(regexp = "(?=\\S+$).+", message = "must not contain spaces")
+    })
+    @Column(nullable = false)
+    private String buyer;
 
-  @Column(nullable = false)
-  private LocalDateTime date;
+    @Past
+    @Column(nullable = false)
+    private LocalDateTime date;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-  @JoinTable(name = "receipt_products",
-      joinColumns =
-      @JoinColumn(name = "receipt_id", nullable = false),
-      inverseJoinColumns =
-      @JoinColumn(name = "product_id", nullable = false))
-  private List<Product> products;
+    @Size(max =3)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "receipt_products",
+            joinColumns =
+            @JoinColumn(name = "receipt_id", nullable = false),
+            inverseJoinColumns =
+            @JoinColumn(name = "product_id", nullable = false))
+    private List<Product> products;
 }
